@@ -38,8 +38,10 @@ Yet, they are great way to didactically illustrate the subtle interactions betwe
 
 
 ### Usage / Sample code
-```python 
+*  Below a mini example of how the code can be used to assess a few scenarios.
+*  A more detailed sample code is found in **./main.py**
 
+```python 
 from utils import plot_scenarios, evaluate_scenarios, plot_performance_vs_n_features
 
 random_seed = 557
