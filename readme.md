@@ -1,4 +1,4 @@
-# --- Didactic mini-project --- 
+# Didactic mini-project
 
 # Impact of pure-noise-features on predictive performance in supervised classification
 * In supervised classification applications, many features are available but we suspect that not all needed.
@@ -29,7 +29,6 @@
 
 import os
 
-bla = "bla"
 
 ```
 
