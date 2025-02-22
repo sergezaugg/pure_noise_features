@@ -40,7 +40,42 @@ Yet, they are great way to didactically illustrate the subtle interactions betwe
 ### Usage / Sample code
 ```python 
 
-import os
+from utils import plot_scenarios, evaluate_scenarios, plot_performance_vs_n_features
+
+random_seed = 557
+
+# Define several scenarios 
+scenarios_di = { 
+    "f01, f02 informative" : {
+        'n1' : 10000, 'mu1' : [0.0, 2.0] , 'std1' : [1,1], 'corr1' : 0.00,
+        'n2' : 10000, 'mu2' : [2.0, 0.0] , 'std2' : [1,1], 'corr2' : 0.00,
+        }
+    ,
+    "f01, f02 jointly informative (parallel)" : {
+        'n1' : 10000, 'mu1' : [-0.14, -0.14] , 'std1' : [1,1], 'corr1' : -0.98,
+        'n2' : 10000, 'mu2' : [+0.14, +0.14] , 'std2' : [1,1], 'corr2' : -0.98,
+        }
+    ,
+   "f01, f02 jointly informative (cross)" : {
+        'n1' : 10000, 'mu1' : [0.0, 0.0] , 'std1' : [1,1], 'corr1' : -0.98,
+        'n2' : 10000, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : +0.98,
+        }
+    ,
+    }
+
+# Prepare scenario figures  
+figs_li = plot_scenarios(scenarios_di, random_seed)
+
+# Evaluate the scenarios
+nb_noisy_features = [0, 5, 25, 50, 100, 500]
+resu00 = evaluate_scenarios(scenarios_di, nb_noisy_features = nb_noisy_features,  rfo_nb_trees = 20, rfo_max_features = 10, random_seed = random_seed)
+
+# Prepare results figures 
+fig00 = plot_performance_vs_n_features(resu00)
+
+# Render all figures 
+[f.show() for f in figs_li]
+fig00.show()
 
 
 ```
@@ -54,7 +89,3 @@ pip install -r requirements.txt
 ```
 
 
-
-### Why Synthetic data 
-*  Strength : we have full ground truth, easy to interpret
-*  Weakness : not realistic
