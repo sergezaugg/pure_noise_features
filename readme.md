@@ -24,6 +24,20 @@
 *  Strength : we have full ground truth, easy to interpret
 *  Weakness : not realistic
 
+## Some scenarios
+*  Only the two first features are show, 
+*  Allo other features are sampled from exactly the same random normal for both classes
+
+![](./pics/sce_all6.png)
+
+
+## Result from the 6 scenarios above
+
+![](./pics/resu_010203.png)
+
+
+
+
 ## Usage / Sample code
 ```python 
 
@@ -31,18 +45,6 @@ import os
 
 
 ```
-
-## Illustration
-
-
-**Figure 1**
-
-![](./pics/resu_010203.png)
-
-**Figure 2**
-
-![](./pics/figure02.png)
-
 
 
 ## Dependencies / Intallation
