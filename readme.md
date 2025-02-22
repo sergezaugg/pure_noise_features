@@ -22,16 +22,18 @@ The scenarios assessed here are artificial and by no way representative of  situ
 Yet, they are great way to didactically illustrate the subtle interactions between data and models.
 
 ## Illustration of possible scenarios
-*  Only the two first features are show, 
+*  Only the two first features are show
 *  All other features are sampled from exactly the same random normal for both classes
+
 ![](./pics/sce_all6.png)
 
 ## Result from the 6 scenarios above
-*  Predictive performance is measured with the AUC from test set
+*  Predictive performance is measured with the AUC from test set (Y axis)
 *  Inclusion of more pure-noise-features did negatively impact performance in most scenarios
-*  A small amount of pure-noise-features often had no measurable impact on performance
-*  The scenarios with joint information if f01 and f02 seem more vulnerable to pure-noise-features
+*  A small to moderate amount of pure-noise-features often had no measurable impact on performance
+*  The scenarios with joint information in f01 and f02 seem more vulnerable to pure-noise-features
 *  Increasing **max_features** parameter of RF made the models more robust to pure-noise-features
+
 ![](./pics/resu_010203.png)
 
 
