@@ -37,7 +37,7 @@ import os
 
 **Figure 1**
 
-![](./pics/figure01.png)
+![](./pics/resu_010203.png)
 
 **Figure 2**
 

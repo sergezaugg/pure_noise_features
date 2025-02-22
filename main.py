@@ -60,7 +60,7 @@ fig02 = plot_performance_vs_n_features(resu02)
 fig03 = plot_performance_vs_n_features(resu03)
 
 # Render all figures 
-# [f.show() for f in figs_li]
+[f.show() for f in figs_li]
 fig01.show()
 fig02.show()
 fig03.show()
