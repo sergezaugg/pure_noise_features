@@ -3,13 +3,13 @@
 # Description : Create synthetic datasets for classification, train models, assess classification performance
 #--------------------
 
-import os
-import numpy as np
-import pandas as pd
-import plotly.express as px
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
+# import os
+# import numpy as np
+# import pandas as pd
+# import plotly.express as px
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import roc_auc_score
 
 from utils import plot_scenarios, evaluate_scenarios, plot_performance_vs_n_features
 random_seed = 557
