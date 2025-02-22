@@ -44,10 +44,12 @@ scenarios_di = {
 # Prepare scenario figures  
 figs_li = plot_scenarios(scenarios_di, random_seed)
 
-# Evaluate the scenarios 
-nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
+# Evaluate the scenarios (QUICK)
 nb_noisy_features = [0, 5, 25, 50, 100, 500]
 nb_trees = 10
+# Evaluate the scenarios (FULL)
+nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500]
+nb_trees = 50
 resu01 = evaluate_scenarios(scenarios_di, nb_noisy_features = nb_noisy_features,  rfo_nb_trees = nb_trees, rfo_max_features =  1, random_seed = random_seed)
 resu02 = evaluate_scenarios(scenarios_di, nb_noisy_features = nb_noisy_features,  rfo_nb_trees = nb_trees, rfo_max_features = 10, random_seed = random_seed)
 resu03 = evaluate_scenarios(scenarios_di, nb_noisy_features = nb_noisy_features,  rfo_nb_trees = nb_trees, rfo_max_features = 25, random_seed = random_seed)
