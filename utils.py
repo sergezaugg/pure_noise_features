@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 
+
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     """ 
     """
@@ -20,10 +21,6 @@ def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     xtemp = np.matmul(sigma1, std)
     covar1 = np.matmul(std, xtemp)
     x1 = np.random.multivariate_normal(mean = mu, cov = covar1, size=n)
-
-    # x1[:,0] = 0.5 * np.cos(x1[:,0])
-    # x1[:,1] = 2.0 * np.sin(x1[:,1])
-
     return(x1)
 
 
@@ -150,13 +147,6 @@ def plot_performance_vs_n_features(li):
     _ = fig.update_yaxes(showline = True, linecolor = 'white', linewidth = 1, row = 1, col = 1, mirror = True)
     # return fig object
     return(fig)
-
-
-
-
-
-
-
 
 
 
