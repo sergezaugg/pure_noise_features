@@ -52,7 +52,7 @@ def make_dataset(params, n_noisy_features):
     return(df)
 
 
-def plot_scenarios(scenarios_di, seed):
+def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     """
     """
     df_figs = []
@@ -66,8 +66,8 @@ def plot_scenarios(scenarios_di, seed):
             x = 'f01',
             y = 'f02',
             color = 'class',
-            width = 450,
-            height = 450,
+            width = width,
+            height = height,
             title = k,
             template="plotly_dark",
             color_discrete_sequence=['#8833ff', '#00ffcc']
@@ -155,7 +155,7 @@ def evaluate_scenarios_logit(sce, nb_noisy_features, logit_c_param, seed):
 
 
 
-def plot_performance_vs_n_features(li):
+def plot_performance_vs_n_features(li,  width = 500, height = 750):
     """
     """
     df  = li[0]
@@ -172,8 +172,8 @@ def plot_performance_vs_n_features(li):
         x = 'nb_noisy_features',
         y = 'resu_auc',
         color = 'scenario',
-        width = 500,
-        height = 750,
+        width = width,
+        height = height,
         markers=True,
         title = pl_title,
         template="plotly_dark",
