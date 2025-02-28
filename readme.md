@@ -1,6 +1,6 @@
 # Impact of pure-noise-features on predictive performance in supervised classification
 
-## Summary
+### Summary
 This is a didactic mini-project.
 In supervised classification applications, many features are typically available but we suspect that not all needed.
 It is legitimate to ask which amount of un-informative feature is acceptable.
@@ -17,28 +17,14 @@ Yet, they are great way to didactically illustrate the subtle interactions betwe
 **IN-DEPTH ILLUSTRATION:**
 See link to Streamlit 
 
-
-
-
-
-
-
-
-## Dependencies / Intallation
+### Dependencies / Intallation
 * Developed under Python 3.12.8
 * First make a venv, then:
 ```
 pip install -r requirements.txt
 ```
 
-
-
-
-
-
-
-
-## Usage / Sample code
+### Usage / Sample code
 *  Below a mini example of how the code can be used to assess a few scenarios.
 *  A more detailed sample code is found in **./main.py**
 

@@ -19,16 +19,21 @@ path_pics = "pics_dashboard"
 # st.set_page_config(layout="wide") # "wide") centered
 
 with st.sidebar:
-    st.write("💜")
+    # st.write("💜")
     st.write("Author: Serge Zaugg")
     st.page_link("https://github.com/sergezaugg/pure_noise_features", label="Link - Python source code")
 
 col_a, col_space01 = st.columns([0.80, 0.20])
 
-
 with col_a:
 
-    st.title("Impact of pure-noise-features on predictive performance in supervised classification")     
+    st.title("Impact of pure-noise-features on predictive performance in supervised classification")    
+
+    url = st.page_link("st_page_01.py", label="Go to interactive page")
+
+    # url = "./st_page_01.py"
+    # st.write("check out this [link](%s)" % url)
+
 
     #----------------
     # xxx line 
