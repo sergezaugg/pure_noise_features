@@ -9,11 +9,6 @@ import streamlit as st
 import plotly.express as px
 from streamlit import session_state as ss
 
-with st.sidebar:
-    # st.write("💜")
-    st.write("Author: Serge Zaugg")
-    st.page_link("https://github.com/sergezaugg/pure_noise_features", label="Link - Python source code")
-
 # initial value of session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
@@ -73,24 +68,15 @@ st.divider()
 c0, c_1, c1, c_2, c2,  = st.columns([0.30, 0.03, 0.10, 0.03,  0.40])
 
 with c0:  
-    # check scenario 
-    # with st.form("A", border=False):
-    #     submitted = st.form_submit_button("Show scatterplot")
-    #     if submitted:
-    #         figs_li = plot_scenarios(scenarios_di, random_seed, width = 450, height = 450,)
-    #         ss["fig01"] = figs_li[0]
-
     figs_li = plot_scenarios(scenarios_di, random_seed, width = 450, height = 450,)
     ss["fig01"] = figs_li[0]        
     st.plotly_chart(ss["fig01"], use_container_width=False, key='k_fig01')
 
-
 with c_1: 
-    st.title("  ")
+    st.title("")
     st.title("")
     st.title("")
     st.image(image = "./icons/arrow.png", width=30, use_container_width=False)
-
 
 with c1:  
     st.title("")   
@@ -110,17 +96,13 @@ with c1:
             ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
             ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
 
-
-
 with c_2: 
-    st.title("  ")
+    st.title("")
     st.title("")
     st.title("")
     st.image(image = "./icons/arrow.png", width=30, use_container_width=False)
 
-
 with c2:  
- 
     st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
         
 st.divider()

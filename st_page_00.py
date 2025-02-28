@@ -4,39 +4,16 @@
 #--------------------
 
 import os
-import numpy as np
 import streamlit as st
-import pandas as pd
-import plotly.express as px
-from streamlit import session_state as ss
-import plotly.io as pio
-
-# run locally
-# streamlit run stmain.py
 
 path_pics = "pics_dashboard"
 
-# st.set_page_config(layout="wide") # "wide") centered
-
-with st.sidebar:
-    # st.write("💜")
-    st.write("Author: Serge Zaugg")
-    st.page_link("https://github.com/sergezaugg/pure_noise_features", label="Link - Python source code")
-
-col_a, col_space01 = st.columns([0.80, 0.20])
+col_a, col_space01 = st.columns([0.75, 0.25])
 
 with col_a:
 
     st.title("Impact of pure-noise-features on predictive performance in supervised classification")    
 
-    url = st.page_link("st_page_01.py", label="Go to interactive page")
-
-    # url = "./st_page_01.py"
-    # st.write("check out this [link](%s)" % url)
-
-
-    #----------------
-    # xxx line 
     st.divider()
 
     st.header("Introduction")     
@@ -58,7 +35,7 @@ with col_a:
     As a modeling method, the Random Forest was chosen because it can handle non-linear problems, it is robust to feature scale, and its hyper-parameters are easy to tune.
     Random Forest has one important hyper-parameter, **max_features**, which is the number of features to consider during search of best split.
     Setting **max_features** to 1 mean at each split the feature to use is chosen at random.
-    Setting it to total number of features means that at each split all features are assessed and the best is chosen            
+    Setting it to total number of features means that at each split all features are assessed and the best is chosen.
     Hence, higher values of **max_features** are expected to perform better in the presence of many pure-noise-features.          
     ''')
 
@@ -91,7 +68,6 @@ with col_a:
     col_c.image(image = os.path.join(path_pics, 'results_03.png'), caption="Figure 9", width=None, use_container_width=False)
 
     #----------------
-    # xxx line 
     st.divider()
 
 

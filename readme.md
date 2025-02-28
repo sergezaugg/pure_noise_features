@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ```python 
 # import all functions and packages
-from utils import plot_scenarios, evaluate_scenarios, plot_performance_vs_n_features
+from utils import plot_scenarios, evaluate_scenarios_rfo, plot_performance_vs_n_features
 
 # Define several scenarios 
 scenarios = { 
@@ -51,7 +51,7 @@ scenarios = {
 # Prepare scenario figures  
 figs_li = plot_scenarios(scenarios_di = scenarios, seed = 55)
 # Evaluate the scenarios
-resu00 = evaluate_scenarios(rfo_max_features = 1, sce = scenarios, 
+resu00 = evaluate_scenarios_rfo(rfo_max_features = 1, sce = scenarios, 
     nb_noisy_features = [0, 5, 25, 50, 100, 500],  ntrees = 10, seed = 66)
 # Prepare results figures 
 fig00 = plot_performance_vs_n_features(resu00)
