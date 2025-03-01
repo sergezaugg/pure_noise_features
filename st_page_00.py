@@ -10,14 +10,20 @@ path_pics = "pics_dashboard"
 
 col_a, col_space01 = st.columns([0.75, 0.25])
 
+# any of the following supported colors: blue, green, orange, red, violet, gray/grey, rainbow, or primary. 
+
 with col_a:
 
-    st.title("Impact of pure-noise-features on predictive performance in supervised classification")    
+    st.title(":orange[Impact of pure-noise-features on predictive performance in supervised classification]")   
+
+    st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
 
     st.divider()
 
-    st.header("Introduction")     
     st.markdown(''' 
+         
+    :orange[**INTRODUCTION:**]
+    
     In supervised classification problems, many features are often available but we suspect that not all needed.
     Detecting and excluding every last non-informative feature if often not feasible.
     It is therefore legitimate to ask which amount of non-informative features is acceptable. 
@@ -26,8 +32,10 @@ with col_a:
     Yet, they are great way to didactically illustrate the subtle interactions between data and models.     
     ''')
 
-    st.header("Methods")   
+    # st.header("Methods")   
     st.markdown(''' 
+    :orange[**METHODS:**]
+                            
     A binary class variable and two features that inform classification are created.
     Many pure-noise-features can be included in the feature space.
     They are non-informative for the classification task because they are sampled from the same random normal for both classes.
@@ -39,8 +47,10 @@ with col_a:
     Hence, higher values of **max_features** are expected to perform better in the presence of many pure-noise-features.          
     ''')
 
-    st.header("Scenarios")   
+    # st.header("Scenarios")   
     st.markdown(''' 
+    :orange[**A FEW POSSIBLE SCENARIOS:**]
+                
     Six scenarios were assessed as show in the figures below.
     Only the two informative features are shown on the plots.                    
     ''')
@@ -54,18 +64,31 @@ with col_a:
     col_c.image(image = os.path.join(path_pics, 'scenario5.png'), caption="Figure 6", width=None, use_container_width=False)
 
 
-    st.header("Results and discussion")     
-    st.markdown('''    
-    Figures 7-9 illustrate how pure-noise-features impacts the predictive performance.
+    # st.header("Results and discussion")     
+    st.markdown('''
+    :orange[**RESULTS AND QUICK DISCUSSION:**]
+
+    Figures 7-9 Impact of pure-noise-features on predictive performance of **random forest**.
     *  Inclusion of more pure-noise-features did negatively impact performance in most scenarios
     *  A small to moderate amount of pure-noise-features often had no measurable impact on performance
     *  The scenarios with joint information in f01 and f02 seem more vulnerable to pure-noise-features
     *  Increasing **max_features** parameter of RF made the models more robust to pure-noise-features
+                
+    Figures 10-12 Impact of pure-noise-features on predictive performance of **logistic regression**.
+    *  Logistic regression is clearly more robust to a large number of pure-noise-features than random forest
+    *  A drop in performance is seen for very large number of pure-noise-features > 100
+    *  Obviously, the scenarios "f01, f02 jointly informative (cross)" cannot be handled by a linear classifier.
+    *  <to be continued ...>
     ''')
     col_a, col_b, col_c = st.columns([0.20, 0.20, 0.20])
     col_a.image(image = os.path.join(path_pics, 'results_01.png'), caption="Figure 7", width=None, use_container_width=False)
     col_b.image(image = os.path.join(path_pics, 'results_02.png'), caption="Figure 8", width=None, use_container_width=False)
     col_c.image(image = os.path.join(path_pics, 'results_03.png'), caption="Figure 9", width=None, use_container_width=False)
+
+    col_a, col_b, col_c = st.columns([0.20, 0.20, 0.20])
+    col_a.image(image = os.path.join(path_pics, 'results_04.png'), caption="Figure 10", width=None, use_container_width=False)
+    col_b.image(image = os.path.join(path_pics, 'results_05.png'), caption="Figure 11", width=None, use_container_width=False)
+    col_c.image(image = os.path.join(path_pics, 'results_06.png'), caption="Figure 12", width=None, use_container_width=False)
 
     #----------------
     st.divider()
