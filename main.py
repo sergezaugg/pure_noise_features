@@ -47,19 +47,19 @@ scenarios_di = {
 figs_li = plot_scenarios(scenarios_di, random_seed)
 
 # Evaluate the scenarios (QUICK)
-nb_noisy_features = [0, 5, 25, 50, 100, 500]
-nb_trees = 10
+# nb_noisy_features = [0, 5, 25, 50, 100, 500]
+# nb_trees = 10
 
 # Evaluate the scenarios (FULL)
-# nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
-# nb_trees = 50
+nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
+nb_trees = 50
 
 resu01 = evaluate_scenarios_rfo(rfo_max_features =  1, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
 resu02 = evaluate_scenarios_rfo(rfo_max_features = 10, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
 resu03 = evaluate_scenarios_rfo(rfo_max_features = 25, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-resu04 = evaluate_scenarios_logit(sce = scenarios_di, nb_noisy_features = nb_noisy_features, logit_c_param =  0.1, seed = random_seed)
-resu05 = evaluate_scenarios_logit(sce = scenarios_di, nb_noisy_features = nb_noisy_features, logit_c_param =  1.0, seed = random_seed)
-resu06 = evaluate_scenarios_logit(sce = scenarios_di, nb_noisy_features = nb_noisy_features, logit_c_param = 10.0, seed = random_seed)
+resu04 = evaluate_scenarios_logit(logit_c_param =  0.1, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
+resu05 = evaluate_scenarios_logit(logit_c_param =  1.0, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
+resu06 = evaluate_scenarios_logit(logit_c_param = 10.0, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
 
 # Prepare results figures 
 fig01 = plot_performance_vs_n_features(resu01)

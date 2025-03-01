@@ -66,18 +66,29 @@ with col_a:
 
     # st.header("Results and discussion")     
     st.markdown('''
-    :orange[**RESULTS AND DISCUSSION:**]
+    :orange[**RESULTS AND QUICK DISCUSSION:**]
 
-    Figures 7-9 illustrate how pure-noise-features impacts the predictive performance.
+    Figures 7-9 Impact of pure-noise-features on predictive performance of **random forest**.
     *  Inclusion of more pure-noise-features did negatively impact performance in most scenarios
     *  A small to moderate amount of pure-noise-features often had no measurable impact on performance
     *  The scenarios with joint information in f01 and f02 seem more vulnerable to pure-noise-features
     *  Increasing **max_features** parameter of RF made the models more robust to pure-noise-features
+                
+    Figures 10-12 Impact of pure-noise-features on predictive performance of **logistic regression**.
+    *  Logistic regression is clearly more robust to a large number of pure-noise-features
+    *  A drop in performance is seen for very large number of pure-noise-features > 100
+    *  Obviously, the scenarios "f01, f02 jointly informative (cross)" cannot be handled by a linear classifier.
+    *  The three assessed values of the regularisation parameter C have virtually no impact
     ''')
     col_a, col_b, col_c = st.columns([0.20, 0.20, 0.20])
     col_a.image(image = os.path.join(path_pics, 'results_01.png'), caption="Figure 7", width=None, use_container_width=False)
     col_b.image(image = os.path.join(path_pics, 'results_02.png'), caption="Figure 8", width=None, use_container_width=False)
     col_c.image(image = os.path.join(path_pics, 'results_03.png'), caption="Figure 9", width=None, use_container_width=False)
+
+    col_a, col_b, col_c = st.columns([0.20, 0.20, 0.20])
+    col_a.image(image = os.path.join(path_pics, 'results_04.png'), caption="Figure 10", width=None, use_container_width=False)
+    col_b.image(image = os.path.join(path_pics, 'results_05.png'), caption="Figure 11", width=None, use_container_width=False)
+    col_c.image(image = os.path.join(path_pics, 'results_06.png'), caption="Figure 12", width=None, use_container_width=False)
 
     #----------------
     st.divider()
