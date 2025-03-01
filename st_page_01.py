@@ -17,6 +17,12 @@ if 'fig02' not in ss:
 
 random_seed = 0
 
+
+
+with st.sidebar:
+    # st.text("aaa")
+    st.image(image = os.path.join('./icons/eye_of_Saurona.png'), caption="The other eye of Sauron", width=None, use_container_width=False)
+
 c0, c1, c2, c3, c4, c5, c6, = st.columns(7)
 with c0:
     st.text("")
