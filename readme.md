@@ -15,7 +15,7 @@ The scenarios assessed here are artificial and by no way representative of situa
 Yet, they are great way to didactically illustrate the subtle interactions between data and models.
 
 **IN-DEPTH ILLUSTRATION:**
-See [link to interactive dashboard](https://purenoisefeatures.streamlit.app/) 
+See [interactive dashboard](https://purenoisefeatures.streamlit.app/) 
 
 ### Dependencies / Intallation
 * Developed under Python 3.12.8

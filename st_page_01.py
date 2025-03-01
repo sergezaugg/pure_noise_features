@@ -95,3 +95,4 @@ with c2:
 st.divider()
 
 
+st.text("Simulation with logistic regression will come here at some point ...")

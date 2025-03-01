@@ -75,10 +75,10 @@ with col_a:
     *  Increasing **max_features** parameter of RF made the models more robust to pure-noise-features
                 
     Figures 10-12 Impact of pure-noise-features on predictive performance of **logistic regression**.
-    *  Logistic regression is clearly more robust to a large number of pure-noise-features
+    *  Logistic regression is clearly more robust to a large number of pure-noise-features than random forest
     *  A drop in performance is seen for very large number of pure-noise-features > 100
     *  Obviously, the scenarios "f01, f02 jointly informative (cross)" cannot be handled by a linear classifier.
-    *  The three assessed values of the regularisation parameter C have virtually no impact
+    *  <to be continued ...>
     ''')
     col_a, col_b, col_c = st.columns([0.20, 0.20, 0.20])
     col_a.image(image = os.path.join(path_pics, 'results_01.png'), caption="Figure 7", width=None, use_container_width=False)
