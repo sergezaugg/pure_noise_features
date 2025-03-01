@@ -59,6 +59,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     for k in scenarios_di:
         # print(k)
         mvn_params = scenarios_di[k]
+        tit_str = 'Class A: N=' + str(mvn_params['n1']) + '   Class B: N=' + str(mvn_params['n2'])
         np.random.seed(seed = seed)
         df = make_dataset(params = mvn_params, n_noisy_features = 0) 
         fig1 = px.scatter(
@@ -68,7 +69,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
             color = 'class',
             width = width,
             height = height,
-            title = k,
+            title = tit_str,
             template="plotly_dark",
             color_discrete_sequence=['#8833ff', '#00ffcc']
             )         
