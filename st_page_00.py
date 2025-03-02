@@ -12,21 +12,12 @@ col_a, col_space01 = st.columns([0.75, 0.25])
 
 # any of the following supported colors: blue, green, orange, red, violet, gray/grey, rainbow, or primary. 
 
-with st.sidebar:
-    # st.text("aaa")
-    st.image(image = os.path.join('./icons/curves.png'), width=None, use_container_width=False)
-
 with col_a:
 
+    st.divider()
     st.title(":orange[Impact of pure-noise-features on predictive performance]") 
-
-    
     st.subheader(":orange[Applied Machine Learning  ---  ML Tutorials  ---  Supervised Classification]") 
-
-      
-
     st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
-
     st.divider()
 
     st.markdown(''' 
@@ -41,7 +32,6 @@ with col_a:
     Yet, they are great way to didactically illustrate the subtle interactions between data and models.     
     ''')
 
-    # st.header("Methods")   
     st.markdown(''' 
     :orange[**METHODS:**]
                             
@@ -56,7 +46,6 @@ with col_a:
     Hence, higher values of **max_features** are expected to perform better in the presence of many pure-noise-features.          
     ''')
 
-    # st.header("Scenarios")   
     st.markdown(''' 
     :orange[**A FEW POSSIBLE SCENARIOS:**]
                 
@@ -72,8 +61,6 @@ with col_a:
     col_b.image(image = os.path.join(path_pics, 'scenario4.png'), caption="Figure 5", width=None, use_container_width=False)
     col_c.image(image = os.path.join(path_pics, 'scenario5.png'), caption="Figure 6", width=None, use_container_width=False)
 
-
-    # st.header("Results and discussion")     
     st.markdown('''
     :orange[**RESULTS AND QUICK DISCUSSION:**]
 
