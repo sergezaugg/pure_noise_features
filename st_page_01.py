@@ -54,7 +54,6 @@ with c6:
     corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=-0.0, label_visibility ="hidden",key = "k012")
 
 
-
 # Define several scenarios 
     scenarios_di = { 
     "custom scenario" : {
@@ -76,6 +75,7 @@ with c1:
     sttr = st.text_input("nb noisy features (comma sep)", "0, 5, 25, 50, 100")
     nb_noisy_features = sttr.split(",")
     nb_noisy_features = [int(a) for a in nb_noisy_features]
+    nb_noisy_features.sort()
     st.text(nb_noisy_features)
     nb_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=30, step=1,)
     rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=1, step=1)
@@ -94,5 +94,7 @@ with c2:
         
 st.divider()
 
-
 st.text("Simulation with logistic regression will come here at some point ...")
+
+
+
