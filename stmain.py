@@ -20,8 +20,9 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
+    st.text("-- Under development --")
     st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title("")
     st.title(""); st.title(""); st.title(""); st.title("") 
-    st.markdown(''':gray[LINKS]''')
+    st.markdown(''':gray[RELATED TOPICS]''')
     st.page_link("https://ml-performance-metrics.streamlit.app/", label=":gray[ml-performance-metrics]")
     st.page_link("https://featureimportance.streamlit.app/", label=":gray[feature-importance:red]")

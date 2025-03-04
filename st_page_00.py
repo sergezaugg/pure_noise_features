@@ -14,15 +14,17 @@ col_a, col_space01 = st.columns([0.75, 0.25])
 
 with col_a:
 
-    st.divider()
-    st.title(":orange[Impact of pure-noise-features on predictive performance]") 
-    st.subheader(":orange[Applied Machine Learning  ---  ML Tutorials  ---  Supervised Classification]") 
-    st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
-    st.divider()
+    with st.container(border=True, key='conta_01'):
+
+        # st.divider()
+        st.title(":orange[Impact of pure-noise-features on predictive performance]") 
+        st.subheader(":orange[Applied Machine Learning  ---  ML Tutorials  ---  Supervised Classification]") 
+        st.page_link("st_page_01.py", label="LINK : Interactive dashboard")
+        # st.divider()
 
     st.markdown(''' 
          
-    :orange[**INTRODUCTION:**]
+    :orange[**INTRODUCTION**]
     
     In supervised classification problems, many features are often available but we suspect that not all needed.
     Detecting and excluding every last non-informative feature if often not feasible.
@@ -33,7 +35,7 @@ with col_a:
     ''')
 
     st.markdown(''' 
-    :orange[**METHODS:**]
+    :orange[**METHODS**]
                             
     A binary class variable and two features that inform classification are created.
     Many pure-noise-features can be included in the feature space.
@@ -47,7 +49,7 @@ with col_a:
     ''')
 
     st.markdown(''' 
-    :orange[**A FEW POSSIBLE SCENARIOS:**]
+    :orange[**A FEW POSSIBLE SCENARIOS**]
                 
     Six scenarios were assessed as show in the figures below.
     Only the two informative features are shown on the plots.                    
@@ -62,7 +64,7 @@ with col_a:
     col_c.image(image = os.path.join(path_pics, 'scenario5.png'), caption="Figure 6", width=None, use_container_width=False)
 
     st.markdown('''
-    :orange[**RESULTS AND QUICK DISCUSSION:**]
+    :orange[**RESULTS AND QUICK DISCUSSION**]
 
     Figures 7-9 Impact of pure-noise-features on predictive performance of **random forest**.
     *  Inclusion of more pure-noise-features did negatively impact performance in most scenarios
