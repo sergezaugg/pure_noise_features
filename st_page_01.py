@@ -76,7 +76,7 @@ with a1:
     }
 
     with st.container(border=True, key='conta_02a', height = 500):
-        figs_li = plot_scenarios(scenarios_di, random_seed, width = 500, height = 450,)
+        figs_li = plot_scenarios(scenarios_di, random_seed, width = 530, height = 470,)
         ss["fig01"] = figs_li[0]        
         st.plotly_chart(ss["fig01"], use_container_width=False, key='k_fig01')
   
@@ -106,7 +106,7 @@ with a0:
                 submitted = st.form_submit_button("Start simulation")
                 if submitted:   
                     resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 600, height = 400)
+                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 600, height = 450)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
         with c2:  
@@ -125,7 +125,7 @@ with a1:
                 submitted = st.form_submit_button("Start simulation")
                 if submitted:   
                     resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
-                    ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
+                    ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 450)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.49, +1.01])
         with c2:  
