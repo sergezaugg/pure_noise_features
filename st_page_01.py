@@ -94,11 +94,12 @@ with a1:
 a0, a1, = st.columns([0.50, 0.50])
 
 with a0:
-    with st.container(border=True, key='conta_02b'):
+    with st.container(border=True, key='conta_02b', height = 500):
 
-        c1, c2,  = st.columns([0.10, 0.40], vertical_alignment="center")
+        c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
 
         with c1:  
+            st.subheader("Random Forest")
             nb_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=30, step=1,)
             rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=1, step=1)
             # compute the simulation 
@@ -106,7 +107,7 @@ with a0:
                 submitted = st.form_submit_button("Start simulation")
                 if submitted:   
                     resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 600, height = 450)
+                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 450)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
         with c2:  
@@ -114,12 +115,13 @@ with a0:
 
 
 with a1:               
-    with st.container(border=True, key='conta_03'):
+    with st.container(border=True, key='conta_03', height = 500):
 
-        c1, c2,  = st.columns([0.10, 0.40], vertical_alignment="center")
+        c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
 
         with c1:  
-            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.00001, max_value=10000.000, value=1.0, )
+            st.subheader("Logistic Regression")
+            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.000, value=1.000000, )
             # compute the simulation 
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation")

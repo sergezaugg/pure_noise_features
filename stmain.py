@@ -15,13 +15,12 @@ pages = {
     ]
 }
 
-# :orange[**INTRODUCTION**]
-
 pg = st.navigation(pages)
 
 pg.run()
 
 with st.sidebar:
+    st.text("-- Under development --")
     st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title("")
     st.title(""); st.title(""); st.title(""); st.title("") 
     st.markdown(''':gray[RELATED TOPICS]''')
