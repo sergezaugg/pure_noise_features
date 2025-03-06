@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
+import streamlit as st
 
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
@@ -25,6 +26,7 @@ def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     return(x1)
 
 
+@st.cache_data
 def make_dataset(params, n_noisy_features): 
     """  
     """
@@ -52,6 +54,7 @@ def make_dataset(params, n_noisy_features):
     return(df)
 
 
+@st.cache_data
 def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     """
     """
@@ -71,7 +74,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
             height = height,
             title = tit_str,
             template="plotly_dark",
-            color_discrete_sequence=['#8833ff', '#00ffcc']
+            color_discrete_sequence=['#ffbb00', '#0077ff']
             )         
         _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
         _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
@@ -82,6 +85,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     return(df_figs)    
 
 
+@st.cache_data
 def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, seed):
     """
     """
@@ -118,8 +122,7 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, see
     return([df_final, params])
 
 
-
-
+@st.cache_data
 def evaluate_scenarios_logit(sce, nb_noisy_features, logit_c_param, seed):
     """
     """
@@ -155,7 +158,7 @@ def evaluate_scenarios_logit(sce, nb_noisy_features, logit_c_param, seed):
     return([df_final, params])
 
 
-
+@st.cache_data
 def plot_performance_vs_n_features(li,  width = 500, height = 750):
     """
     """
@@ -179,6 +182,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
         title = pl_title,
         template="plotly_dark",
         log_x = True,
+        color_discrete_sequence=['#ffbb00', '#0077ff']
         )
     # dirty trick to be able to plot 0 on a logarithmic x axis 
     x_axis_num = fig['data'][0]['x']
