@@ -9,6 +9,14 @@ import streamlit as st
 import plotly.express as px
 from streamlit import session_state as ss
 
+
+random_seed = 0
+
+init_vals = {
+    'n1' : 200, 'mu1' : [0.0,  1.0],  'std1' : [1.0,1.0], 'corr1' : +0.00,
+    'n2' : 200, 'mu2' : [1.0, -0.0] , 'std2' : [1.0,1.0], 'corr2' : +0.00,
+    }
+
 # initial value of session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
@@ -16,8 +24,51 @@ if 'fig02' not in ss:
     ss.fig02 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig03' not in ss:
     ss.fig03 = px.scatter(x = [0], y = [0], width = 10, height = 10)
+if 'distr' not in ss:
+    ss['distr'] = init_vals
 
-random_seed = 0
+
+
+
+
+with st.form("CHOOSE", border=False):
+
+        
+    a0, a1, = st.columns([0.60, 0.40])
+    with a0:
+        preset_options = ["A","B","C","D",]
+        option1 = st.selectbox("", preset_options, key = 'sel02')
+    with a1:
+        submitted = st.form_submit_button("choose")
+
+    if submitted: 
+        if option1 == preset_options[0]:
+            ss['distr'] = {
+                'n1' : 10000, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
+                'n2' : 10000, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,
+                }
+        if option1 == preset_options[1]:
+            ss['distr'] = {
+                'n1' : 10000, 'mu1' : [0.0, 2.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
+                'n2' : 10000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
+                }  
+        if option1 == preset_options[2]:
+            ss['distr'] = {
+                'n1' : 10000, 'mu1' : [-0.14, -0.14] , 'std1' : [1.0,1.0], 'corr1' : -0.98,
+                'n2' : 10000, 'mu2' : [+0.14, +0.14] , 'std2' : [1.0,1.0], 'corr2' : -0.98,
+                }
+        if option1 == preset_options[3]:
+            ss['distr'] = {
+                'n1' : 10000, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : -0.98,
+                'n2' : 10000, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : +0.98,
+                }
+            
+   
+
+
+
+
+
 
 
 
@@ -25,34 +76,34 @@ a0, a1, = st.columns([0.60, 0.40])
 with a0:
     with st.container(border=True, key='conta_01', height = 300):
         st.text("Distribution class A")
-        c1, c2, c3, c4, c5, c6, = st.columns(6)   
+        c1, c2, c3, c4, c5, c6, = st.columns(6)  
         with c1:
-            n1 = st.number_input(label = "N",  min_value=100, max_value=10000, value=3000, step=100, key = "k001")
+            n1 = st.number_input(label = "N",  min_value=100, max_value=10000,             value=ss['distr']['n1'], step=100, key = "k001")
         with c2:
-            mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0, value=0.0,  key = "k002")
+            mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu1'][0],  key = "k002")
         with c3:
-            mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0, value=0.0,  key = "k003")
+            mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu1'][1],  key = "k003")
         with c4:
-            std1x = st.number_input(label = "Stdev X", min_value=0.1, max_value=10.0, value=1.0,  key = "k004")
+            std1x = st.number_input(label = "Stdev X", min_value=0.1, max_value=10.0,      value=ss['distr']['std1'][0],  key = "k004")
         with c5:
-            std1y = st.number_input(label = "Stdev Y", min_value=0.1, max_value=10.0, value=1.0,  key = "k005")
+            std1y = st.number_input(label = "Stdev Y", min_value=0.1, max_value=10.0,      value=ss['distr']['std1'][1],  key = "k005")
         with c6:
-            corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=0.0,  key = "k006")
+            corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=ss['distr']['corr1'],  key = "k006")
 
         st.text("Distribution class B")
         c1, c2, c3, c4, c5, c6, = st.columns(6)
         with c1:
-            n2 = st.number_input(label = "N",  min_value=100, max_value=10000, value=1000, step=100, label_visibility ="visible", key = "k007")
+            n2 = st.number_input(label = "N",  min_value=100, max_value=10000,             value=ss['distr']['n2'], step=100, label_visibility ="visible", key = "k007")
         with c2:
-            mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0, value=0.0, label_visibility ="visible",key = "k008")
+            mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu2'][0], label_visibility ="visible",key = "k008")
         with c3:
-            mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0, value=0.0, label_visibility ="visible",key = "k009")
+            mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu2'][1], label_visibility ="visible",key = "k009")
         with c4:
-            std2x = st.number_input(label = "Stdev X", min_value=0.1, max_value=10.0, value=0.1, label_visibility ="visible",key = "k010")
+            std2x = st.number_input(label = "Stdev X", min_value=0.1, max_value=10.0,      value=ss['distr']['std2'][0], label_visibility ="visible",key = "k010")
         with c5:
-            std2y = st.number_input(label = "Stdev Y", min_value=0.1, max_value=10.0, value=1.0, label_visibility ="visible",key = "k011")
+            std2y = st.number_input(label = "Stdev Y", min_value=0.1, max_value=10.0,      value=ss['distr']['std2'][1], label_visibility ="visible",key = "k011")
         with c6:
-            corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=-0.0, label_visibility ="visible",key = "k012")
+            corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=-ss['distr']['corr2'], label_visibility ="visible",key = "k012")
 
     with st.container(border=True, key='conta_01a', height = 185):
         c0, c1,  = st.columns(2)
