@@ -9,15 +9,14 @@ import streamlit as st
 import plotly.express as px
 from streamlit import session_state as ss
 
-
-random_seed = 0
+random_seed = 8594652
 
 init_vals = {
-    'n1' : 200, 'mu1' : [0.0,  1.0],  'std1' : [1.0,1.0], 'corr1' : +0.00,
-    'n2' : 200, 'mu2' : [1.0, -0.0] , 'std2' : [1.0,1.0], 'corr2' : +0.00,
+    'n1' : 5000, 'mu1' : [0.0, 2.0],  'std1' : [1.0,1.0], 'corr1' : +0.00,
+    'n2' : 5000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : +0.00,
     }
 
-# initial value of session state
+# initial session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig02' not in ss:
@@ -26,9 +25,6 @@ if 'fig03' not in ss:
     ss.fig03 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'distr' not in ss:
     ss['distr'] = init_vals
-
-
-
 
 
 a0, a1 = st.columns([0.60, 0.40])
@@ -50,31 +46,30 @@ with a0:
             if submitted: 
                 if option1 == preset_options[0]:
                     ss['distr'] = {
-                        'n1' : 10000, 'mu1' : [0.0, 2.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
-                        'n2' : 10000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
+                        'n1' : 5000, 'mu1' : [0.0, 2.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
+                        'n2' : 5000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
                         }  
                 if option1 == preset_options[1]:
                       ss['distr'] = {
-                        'n1' : 10000, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
-                        'n2' : 10000, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
+                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
+                        'n2' : 5000, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
                         }
                 if option1 == preset_options[2]:
                     ss['distr'] = {
-                        'n1' : 10000, 'mu1' : [-0.14, -0.14] , 'std1' : [1.0,1.0], 'corr1' : -0.98,
-                        'n2' : 10000, 'mu2' : [+0.14, +0.14] , 'std2' : [1.0,1.0], 'corr2' : -0.98,
+                        'n1' : 5000, 'mu1' : [-0.14, -0.14] , 'std1' : [1.0,1.0], 'corr1' : -0.98,
+                        'n2' : 5000, 'mu2' : [+0.14, +0.14] , 'std2' : [1.0,1.0], 'corr2' : -0.98,
                         }
                 if option1 == preset_options[3]:
                     ss['distr'] = {
-                        'n1' : 10000, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : -0.25,
-                        'n2' : 10000, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : +0.25,
+                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : -0.25,
+                        'n2' : 5000, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : +0.25,
                         }
                 if option1 == preset_options[4]:
                     ss['distr'] = {
-                        'n1' : 10000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
-                        'n2' : 10000, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
+                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
+                        'n2' : 5000, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
                         }
                     
-
 
 a0, a1, = st.columns([0.60, 0.40])
 with a0:
@@ -93,7 +88,6 @@ with a0:
             std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][1],  key = "k005")
         with c6:
             corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=ss['distr']['corr1'],  key = "k006")
-
         st.text("Finetune distribution class B")
         c1, c2, c3, c4, c5, c6, = st.columns(6)
         with c1:
@@ -121,7 +115,6 @@ with a0:
 
 
 with a1:
-
     # Define several scenarios 
     scenarios_di = { 
     "custom scenario" : {
@@ -137,7 +130,6 @@ with a1:
   
 
 a0, a1, = st.columns([0.50, 0.50])
-
 with a0:
     with st.container(border=True, key='conta_02b', height = 500):
 
@@ -157,8 +149,7 @@ with a0:
                     ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
         with c2:  
             st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
-
-
+            
 with a1:               
     with st.container(border=True, key='conta_03', height = 500):
 

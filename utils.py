@@ -74,7 +74,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
             height = height,
             title = tit_str,
             template="plotly_dark",
-            color_discrete_sequence=['#ffbb00', '#0077ff']
+            color_discrete_sequence=['#0077ff', '#ffbb00']
             )         
         _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
         _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
@@ -182,7 +182,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
         title = pl_title,
         template="plotly_dark",
         log_x = True,
-        color_discrete_sequence=['#ffbb00', '#0077ff']
+        color_discrete_sequence=['#ffbb00', '#0077ff', '#00ff00', '#00eeff', '#ff00ff', '#88ff99']
         )
     # dirty trick to be able to plot 0 on a logarithmic x axis 
     x_axis_num = fig['data'][0]['x']
