@@ -3,28 +3,65 @@
 # Description : Streamlit page 
 #--------------------
 
-from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features
-import os
 import streamlit as st
 import plotly.express as px
+from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features
 from streamlit import session_state as ss
 
-random_seed = 8594652
+random_seed = 557
 
-init_vals = {
-    'n1' : 5000, 'mu1' : [0.0, 2.0],  'std1' : [1.0,1.0], 'corr1' : +0.00,
-    'n2' : 5000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : +0.00,
+# Define pre-specified scenarios 
+N = 3000
+scenarios_di = { 
+    "Linearly separable I" : {
+        'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
+        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
+        },
+    "Saurona" : {           
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
+        },
+    "Parallel" : {
+        'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
+        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,
+        },
+    "Cross" : {
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : -0.96,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : +0.96,
+        },
+    "Linearly separable II" : {
+        'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
+        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
+        },
+    "Weak informative" : {
+        'n1' : N, 'mu1' : [0.5, 0.0] , 'std1' : [1.0,1.0], 'corr1' : -0.90,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : -0.90,
+        }, 
+   "Redundant" : {
+        'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
+        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,
+        }, 
+   "Not separable" : {
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,
+        }, 
+   "Looking up" : {
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
+        'n2' : N, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
+        }
     }
+
+ 
 
 # initial session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig02' not in ss:
-    ss.fig02 = px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig02 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig03' not in ss:
-    ss.fig03 = px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig03 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'distr' not in ss:
-    ss['distr'] = init_vals
+    ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
 
 
 a0, a1 = st.columns([0.60, 0.40])
@@ -36,7 +73,16 @@ with a0:
             a0, a1, a2 = st.columns([0.60, 0.40, 0.40])
            
             with a0:
-                preset_options = ["Linearly separable","Saurona","Cross","Not separable", "Looking up"]
+                preset_options = ["Linearly separable I", 
+                                  "Linearly separable II", 
+                                  "Weak informative",
+                                  "Redundant",
+                                  "Parallel", 
+                                  "Cross", 
+                                  "Saurona", 
+                                  "Looking up",
+                                  "Not separable",
+                                  ]
                 option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
             with a1:
                 st.text("")
@@ -44,32 +90,9 @@ with a0:
                 submitted = st.form_submit_button("Choose")
 
             if submitted: 
-                if option1 == preset_options[0]:
-                    ss['distr'] = {
-                        'n1' : 5000, 'mu1' : [0.0, 2.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
-                        'n2' : 5000, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-                        }  
-                if option1 == preset_options[1]:
-                      ss['distr'] = {
-                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
-                        'n2' : 5000, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
-                        }
-                if option1 == preset_options[2]:
-                    ss['distr'] = {
-                        'n1' : 5000, 'mu1' : [-0.14, -0.14] , 'std1' : [1.0,1.0], 'corr1' : -0.98,
-                        'n2' : 5000, 'mu2' : [+0.14, +0.14] , 'std2' : [1.0,1.0], 'corr2' : -0.98,
-                        }
-                if option1 == preset_options[3]:
-                    ss['distr'] = {
-                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : -0.25,
-                        'n2' : 5000, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : +0.25,
-                        }
-                if option1 == preset_options[4]:
-                    ss['distr'] = {
-                        'n1' : 5000, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
-                        'n2' : 5000, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
-                        }
-                    
+                ss['distr'] = {'cus' : scenarios_di[option1]}
+               
+                   
 
 a0, a1, = st.columns([0.60, 0.40])
 with a0:
@@ -77,31 +100,31 @@ with a0:
         st.text("Finetune distribution class A")
         c1, c2, c3, c4, c5, c6, = st.columns(6)  
         with c1:
-            n1 = st.number_input(label = "N",  min_value=10, max_value=10000,             value=ss['distr']['n1'], step=100, key = "k001")
+            n1 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n1'], step=100, key = "k001")
         with c2:
-            mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu1'][0],  key = "k002")
+            mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][0],  key = "k002")
         with c3:
-            mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu1'][1],  key = "k003")
+            mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][1],  key = "k003")
         with c4:
-            std1x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][0],  key = "k004")
+            std1x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][0],  key = "k004")
         with c5:
-            std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std1'][1],  key = "k005")
+            std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][1],  key = "k005")
         with c6:
-            corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=ss['distr']['corr1'],  key = "k006")
+            corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr1'],  key = "k006")
         st.text("Finetune distribution class B")
         c1, c2, c3, c4, c5, c6, = st.columns(6)
         with c1:
-            n2 = st.number_input(label = "N",  min_value=10, max_value=10000,             value=ss['distr']['n2'], step=100, label_visibility ="visible", key = "k007")
+            n2 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n2'], step=100, label_visibility ="visible", key = "k007")
         with c2:
-            mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu2'][0], label_visibility ="visible",key = "k008")
+            mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][0], label_visibility ="visible",key = "k008")
         with c3:
-            mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,      value=ss['distr']['mu2'][1], label_visibility ="visible",key = "k009")
+            mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][1], label_visibility ="visible",key = "k009")
         with c4:
-            std2x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][0], label_visibility ="visible",key = "k010")
+            std2x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][0], label_visibility ="visible",key = "k010")
         with c5:
-            std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['std2'][1], label_visibility ="visible",key = "k011")
+            std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][1], label_visibility ="visible",key = "k011")
         with c6:
-            corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0, value=-ss['distr']['corr2'], label_visibility ="visible",key = "k012")
+            corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'], label_visibility ="visible",key = "k012")
 
     with st.container(border=True, key='conta_01a', height = 185):
         c0, c1,  = st.columns(2)
@@ -115,16 +138,14 @@ with a0:
 
 
 with a1:
-    # Define several scenarios 
-    scenarios_di = { 
-    "custom scenario" : {
-    'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
-    'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
-    }
-    }
-
+    # finetune distribution
+    ss['distr']['cus'] =  {
+        'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
+        'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
+        }
+    
     with st.container(border=True, key='conta_02a', height = 500):
-        figs_li = plot_scenarios(scenarios_di, random_seed, width = 530, height = 470,)
+        figs_li = plot_scenarios(ss['distr'], random_seed, width = 555, height = 460,)
         ss["fig01"] = figs_li[0]        
         st.plotly_chart(ss["fig01"], use_container_width=False, key='k_fig01')
   
@@ -132,9 +153,7 @@ with a1:
 a0, a1, = st.columns([0.50, 0.50])
 with a0:
     with st.container(border=True, key='conta_02b', height = 500):
-
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
-
         with c1:  
             st.subheader("Random Forest")
             nb_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=30, step=1,)
@@ -143,18 +162,19 @@ with a0:
             with st.form("B", border=False):
                 submitted = st.form_submit_button("Start simulation")
                 if submitted:   
-                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
+                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
                     ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 450)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
-        with c2:  
-            st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
+            with c2:  
+                if ss["fig02"] == "not_available":
+                    print("plot not available")
+                else:    
+                    st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
             
 with a1:               
     with st.container(border=True, key='conta_03', height = 500):
-
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
-
         with c1:  
             st.subheader("Logistic Regression")
             logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.0, value=1.0)
@@ -162,12 +182,15 @@ with a1:
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation")
                 if submitted:   
-                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
+                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = nb_noisy_features, seed = random_seed)
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 450)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.49, +1.01])
-        with c2:  
-            st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
+            with c2:  
+                if ss["fig03"] == "not_available":
+                    print("plot not available")
+                else:                
+                    st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
 
 
 
