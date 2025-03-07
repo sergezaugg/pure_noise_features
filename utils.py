@@ -14,7 +14,7 @@ from sklearn.metrics import roc_auc_score
 import streamlit as st
 
 
-plotcol_seq = ['#ffaa00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
+plotcol_seq = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 # ['#0077ff', '#ffbb00']
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):

@@ -28,8 +28,8 @@ scenarios_di = {
         }
     ,
    "f01, f02 jointly informative (cross)" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1,1], 'corr1' : -0.98,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : +0.98,
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1,1], 'corr1' : -0.96,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : +0.96,
         }
     ,
     "Only f01 is informative " : {
@@ -48,8 +48,8 @@ scenarios_di = {
 figs_li = plot_scenarios(scenarios_di, random_seed)
 
 # # Evaluate the scenarios (QUICK)
-nb_noisy_features = [0, 5, 25, 50, 100, 500]
-nb_trees = 5
+nb_noisy_features = [0, 5, 10]
+nb_trees = 10
 
 # # Evaluate the scenarios (FULL)
 # nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
