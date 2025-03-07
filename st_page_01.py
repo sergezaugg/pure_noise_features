@@ -8,7 +8,7 @@ import plotly.express as px
 from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features
 from streamlit import session_state as ss
 
-random_seed = 8594652
+random_seed = 557
 
 # Define pre-specified scenarios 
 N = 3000

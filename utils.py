@@ -14,8 +14,8 @@ from sklearn.metrics import roc_auc_score
 import streamlit as st
 
 
-plotcol_seq = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
-# ['#0077ff', '#ffbb00']
+plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
+plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     """ 
@@ -77,7 +77,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
             height = height,
             title = tit_str,
             template="plotly_dark",
-            color_discrete_sequence = plotcol_seq,
+            color_discrete_sequence = plotcol_seq01,
             )         
         _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
         _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
@@ -187,7 +187,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
         title = pl_title,
         template="plotly_dark",
         log_x = True,
-        color_discrete_sequence = plotcol_seq,
+        color_discrete_sequence = plotcol_seq02,
         )
     # dirty trick to be able to plot 0 on a logarithmic x axis 
     x_axis_num = fig['data'][0]['x']
