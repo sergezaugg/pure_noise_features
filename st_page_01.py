@@ -42,8 +42,8 @@ scenarios_di = {
         'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,
         }, 
    "Not separable" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : -0.25,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : +0.25,
+        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,
         }, 
    "Looking up" : {
         'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
@@ -59,9 +59,9 @@ scenarios_di = {
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig02' not in ss:
-    ss.fig02 = px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig02 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig03' not in ss:
-    ss.fig03 = px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig03 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'distr' not in ss:
     ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
 
@@ -150,7 +150,7 @@ with a1:
         }
     
     with st.container(border=True, key='conta_02a', height = 500):
-        figs_li = plot_scenarios(ss['distr'], random_seed, width = 530, height = 470,)
+        figs_li = plot_scenarios(ss['distr'], random_seed, width = 555, height = 460,)
         ss["fig01"] = figs_li[0]        
         st.plotly_chart(ss["fig01"], use_container_width=False, key='k_fig01')
   
@@ -171,8 +171,11 @@ with a0:
                     ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 450)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.49, +1.01])
-        with c2:  
-            st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
+            with c2:  
+                if ss["fig02"] == "not_available":
+                    print("plot not available")
+                else:    
+                    st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
             
 with a1:               
     with st.container(border=True, key='conta_03', height = 500):
@@ -188,8 +191,11 @@ with a1:
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 450)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.49, +1.01])
-        with c2:  
-            st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
+            with c2:  
+                if ss["fig03"] == "not_available":
+                    print("plot not available")
+                else:                
+                    st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
 
 
 
