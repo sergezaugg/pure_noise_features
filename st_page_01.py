@@ -53,8 +53,6 @@ scenarios_di = {
 
  
 
-
-
 # initial session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
@@ -96,8 +94,6 @@ with a0:
                
                    
 
-                    
-
 a0, a1, = st.columns([0.60, 0.40])
 with a0:
     with st.container(border=True, key='conta_01', height = 300):
@@ -129,7 +125,6 @@ with a0:
             std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][1], label_visibility ="visible",key = "k011")
         with c6:
             corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'], label_visibility ="visible",key = "k012")
-
 
     with st.container(border=True, key='conta_01a', height = 185):
         c0, c1,  = st.columns(2)
