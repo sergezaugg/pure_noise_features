@@ -5,18 +5,10 @@
 
 import streamlit as st
 import plotly.express as px
-from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features
+from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features, str_to_int_spec
 from streamlit import session_state as ss
 
 random_seed = 557
-
-
-
-def str_to_int_spec(s):
-    try:
-        return(int(s))
-    except:
-        return(0)
 
 # Define pre-specified scenarios 
 N = 3000
@@ -72,38 +64,58 @@ if 'distr' not in ss:
     ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
 
 
-a0, a1 = st.columns([0.60, 0.40])
-with a0:
-    with st.container(border=True, key='conta_b01'):
+# a0, a1 = st.columns([0.60, 0.40])
+# with a0:
+#     st.text("old")
+    # with st.container(border=True, key='conta_b01'):
+    #     with st.form(key = "f01", border=False):
+    #         a0, a1, a2 = st.columns([0.60, 0.40, 0.40])
+    #         with a0:
+    #             preset_options = ["Linearly separable I", 
+    #                               "Linearly separable II", 
+    #                               "Weak informative",
+    #                               "Redundant",
+    #                               "Parallel", 
+    #                               "Cross", 
+    #                               "Saurona", 
+    #                               "Looking up",
+    #                               "Not separable",
+    #                               ]
+    #             option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
+    #         with a1:
+    #             st.text("")
+    #             st.text("")
+    #             submitted = st.form_submit_button("Confirm")
+    #         if submitted: 
+    #             ss['distr'] = {'cus' : scenarios_di[option1]}
 
+         
+                
+a0b, a1b, = st.columns([0.60, 0.40])
+with a0b:
+
+    with st.container(border=True, key='conta_b01'):
         with st.form(key = "f01", border=False):
-   
-            a0, a1, a2 = st.columns([0.60, 0.40, 0.40])
-           
+            a0, a1, a2 = st.columns(3)  # st.columns([0.60, 0.40, 0.40])
             with a0:
                 preset_options = ["Linearly separable I", 
-                                  "Linearly separable II", 
-                                  "Weak informative",
-                                  "Redundant",
-                                  "Parallel", 
-                                  "Cross", 
-                                  "Saurona", 
-                                  "Looking up",
-                                  "Not separable",
-                                  ]
+                                    "Linearly separable II", 
+                                    "Weak informative",
+                                    "Redundant",
+                                    "Parallel", 
+                                    "Cross", 
+                                    "Saurona", 
+                                    "Looking up",
+                                    "Not separable",
+                                    ]
                 option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
             with a1:
                 st.text("")
                 st.text("")
                 submitted = st.form_submit_button("Confirm")
-
             if submitted: 
                 ss['distr'] = {'cus' : scenarios_di[option1]}
-               
-                   
 
-a0, a1, = st.columns([0.60, 0.40])
-with a0:
     with st.container(border=True, key='conta_01', height = 300):
         st.text("Finetune distribution class A")
         c1, c2, c3, c4, c5, c6, = st.columns(6)  
@@ -134,8 +146,8 @@ with a0:
         with c6:
             corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'], label_visibility ="visible",key = "k012")
 
-    with st.container(border=True, key='conta_01a', height = 185):
-        c0, c1, c2  = st.columns(3)
+    with st.container(border=True, key='conta_01a', height = 100):
+        c0, c1, c2 = st.columns(3)
         with c0:
             sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 5, 25, 50, 100, 500")
             nb_noisy_features = sttr.split(",")
@@ -149,19 +161,14 @@ with a0:
         with c2:
             st.text("")  
             
-
-
-"558".isdigit()
-
-
-with a1:
+with a1b:
     # finetune distribution
     ss['distr']['cus'] =  {
         'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
         'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
         }
     
-    with st.container(border=True, key='conta_02a', height = 500):
+    with st.container(border=True, key='conta_02a', height = 536):
         figs_li = plot_scenarios(ss['distr'], random_seed, width = 555, height = 460,)
         ss["fig01"] = figs_li[0]        
         st.plotly_chart(ss["fig01"], use_container_width=False, key='k_fig01')
