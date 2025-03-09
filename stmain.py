@@ -8,12 +8,10 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
-pages = {
-    "NAVIGATION": [
-        st.Page("st_page_00.py", title="Summary"),
-        st.Page("st_page_01.py", title="Interactive"),
+pages = [
+    st.Page("st_page_00.py", title="Summary"),
+    st.Page("st_page_01.py", title="Interactive"),
     ]
-}
 
 pg = st.navigation(pages)
 
