@@ -10,6 +10,14 @@ from streamlit import session_state as ss
 
 random_seed = 557
 
+
+
+def str_to_int_spec(s):
+    try:
+        return(int(s))
+    except:
+        return(0)
+
 # Define pre-specified scenarios 
 N = 3000
 scenarios_di = { 
@@ -87,7 +95,7 @@ with a0:
             with a1:
                 st.text("")
                 st.text("")
-                submitted = st.form_submit_button("Choose")
+                submitted = st.form_submit_button("Confirm")
 
             if submitted: 
                 ss['distr'] = {'cus' : scenarios_di[option1]}
@@ -127,14 +135,23 @@ with a0:
             corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'], label_visibility ="visible",key = "k012")
 
     with st.container(border=True, key='conta_01a', height = 185):
-        c0, c1,  = st.columns(2)
+        c0, c1, c2  = st.columns(3)
         with c0:
-            st.text("")   
-            sttr = st.text_input("Nb noisy features (comma separated)", "0, 5, 25, 50, 100")
+            sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 5, 25, 50, 100, 500")
             nb_noisy_features = sttr.split(",")
-            nb_noisy_features = [int(a) for a in nb_noisy_features]
+            nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
+            nb_noisy_features.append(0) # force ZERO to be in
+            nb_noisy_features = list(set(nb_noisy_features)) # remove duplicates
             nb_noisy_features.sort()
+        with c1:
+            st.text("Selected values")  
             st.text(nb_noisy_features)  
+        with c2:
+            st.text("")  
+            
+
+
+"558".isdigit()
 
 
 with a1:
