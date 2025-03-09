@@ -51,8 +51,6 @@ scenarios_di = {
         }
     }
 
- 
-
 # initial session state
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
@@ -64,33 +62,7 @@ if 'distr' not in ss:
     ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
 
 
-# a0, a1 = st.columns([0.60, 0.40])
-# with a0:
-#     st.text("old")
-    # with st.container(border=True, key='conta_b01'):
-    #     with st.form(key = "f01", border=False):
-    #         a0, a1, a2 = st.columns([0.60, 0.40, 0.40])
-    #         with a0:
-    #             preset_options = ["Linearly separable I", 
-    #                               "Linearly separable II", 
-    #                               "Weak informative",
-    #                               "Redundant",
-    #                               "Parallel", 
-    #                               "Cross", 
-    #                               "Saurona", 
-    #                               "Looking up",
-    #                               "Not separable",
-    #                               ]
-    #             option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
-    #         with a1:
-    #             st.text("")
-    #             st.text("")
-    #             submitted = st.form_submit_button("Confirm")
-    #         if submitted: 
-    #             ss['distr'] = {'cus' : scenarios_di[option1]}
-
-         
-                
+# First line             
 a0b, a1b, = st.columns([0.60, 0.40])
 with a0b:
 
@@ -149,7 +121,7 @@ with a0b:
     with st.container(border=True, key='conta_01a', height = 100):
         c0, c1, c2 = st.columns(3)
         with c0:
-            sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 5, 25, 50, 100, 500")
+            sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 3, 10, 30, 100, 300, 1000")
             nb_noisy_features = sttr.split(",")
             nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
             nb_noisy_features.append(0) # force ZERO to be in
@@ -160,7 +132,8 @@ with a0b:
             st.text(nb_noisy_features)  
         with c2:
             st.text("")  
-            
+
+# Second line                  
 with a1b:
     # finetune distribution
     ss['distr']['cus'] =  {

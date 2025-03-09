@@ -20,11 +20,13 @@ plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66
 
 def str_to_int_spec(s):
     """
+    Description: transform string s to integer, if not possible return 0 (Zero)
     """
     try:
         return(int(s))
     except:
         return(0)
+
 
 def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     """ 
