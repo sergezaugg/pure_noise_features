@@ -210,6 +210,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
     _ = fig.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig.update_layout(paper_bgcolor="#222222")
+    _ = fig.update(layout_showlegend = False)
     # return fig object
     return(fig)
 

@@ -55,14 +55,14 @@ scenarios_di = {
 if 'fig01' not in ss:
     ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
 if 'fig02' not in ss:
-    ss.fig02 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig02 = "not_available" 
 if 'fig03' not in ss:
-    ss.fig03 = "not_available" # px.scatter(x = [0], y = [0], width = 10, height = 10)
+    ss.fig03 = "not_available" 
 if 'distr' not in ss:
     ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
 
 
-# First line             
+# ---------------------          
 a0b, a1b, = st.columns([0.60, 0.40])
 with a0b:
 
@@ -90,48 +90,48 @@ with a0b:
 
     with st.form("f02", border=False, clear_on_submit=False, enter_to_submit=False):
         with st.container(border=True, key='conta_01', height = 300):
-            cc1, cc2, _, _ = st.columns(4)  # >>>>>>>>>>>
+            cc1, cc2, _, _ = st.columns(4)  
             with cc1:
                 st.text("Finetune distribution class A")
             with cc2:
                 submitted_1 = st.form_submit_button("Submit values", type="primary", use_container_width = True)
             c1, c2, c3, c4, c5, c6, = st.columns(6)  
             with c1:
-                n1 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n1'], step=100, key = "k001")
+                n1 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n1'],      step=100, key = "k001")
             with c2:
-                mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][0],  key = "k002")
+                mu1x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][0],  step=1.0, key = "k002")
             with c3:
-                mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][1],  key = "k003")
+                mu1y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu1'][1],  step=1.0, key = "k003")
             with c4:
-                std1x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][0],  key = "k004")
+                std1x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][0], step=0.1, key = "k004")
             with c5:
-                std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][1],  key = "k005")
+                std1y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std1'][1], step=0.1, key = "k005")
             with c6:
-                corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr1'],  key = "k006")
+                corr1 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr1'],   step=0.1, key = "k006")
             st.text("Finetune distribution class B")
             c1, c2, c3, c4, c5, c6, = st.columns(6)
             with c1:
-                n2 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n2'], step=100, label_visibility ="visible", key = "k007")
+                n2 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n2'],      step=100, key = "k007")
             with c2:
-                mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][0], label_visibility ="visible",key = "k008")
+                mu2x = st.number_input(label = "Mean X", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][0],  step=1.0, key = "k008")
             with c3:
-                mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][1], label_visibility ="visible",key = "k009")
+                mu2y = st.number_input(label = "Mean Y", min_value=-10.0, max_value=10.0,       value=ss['distr']['cus']['mu2'][1],  step=1.0, key = "k009")
             with c4:
-                std2x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][0], label_visibility ="visible",key = "k010")
+                std2x = st.number_input(label = "Stdev X", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][0], step=0.1, key = "k010")
             with c5:
-                std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][1], label_visibility ="visible",key = "k011")
+                std2y = st.number_input(label = "Stdev Y", min_value=0.01, max_value=10.0,      value=ss['distr']['cus']['std2'][1], step=0.1, key = "k011")
             with c6:
-                corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'], label_visibility ="visible",key = "k012")
+                corr2 = st.number_input(label = "Correlation", min_value=-1.0, max_value=+1.0,  value=ss['distr']['cus']['corr2'],   step=0.1, key = "k012")
 
             if submitted_1:
                 ss['distr']['cus'] =  {
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
                     'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
                     }
-                st.rerun() # apparently this solves the jump-back-button-glitch-wtf
+                st.rerun() # this solves the jump-back-button-glitch-wtf
     
 
-# select number of features 
+# ---------------------          
     with st.container(border=True, key='conta_01a', height = 100):
         c0, c1, c2 = st.columns(3)
         with c0:
@@ -149,9 +149,8 @@ with a0b:
 
 
 
-# Second line                  
+# ---------------------                         
 with a1b:
- 
     with st.container(border=True, key='conta_02a', height = 536):
         figs_li = plot_scenarios(ss['distr'], random_seed, width = 555, height = 460,)
         ss["fig01"] = figs_li[0]        
@@ -159,7 +158,7 @@ with a1b:
   
 a0, a1, = st.columns([0.50, 0.50])
 with a0:
-    with st.container(border=True, key='conta_02b', height = 500):
+    with st.container(border=True, key='conta_02b', height = 440):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Random Forest")
@@ -170,7 +169,7 @@ with a0:
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
                     resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 450)
+                    ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 400)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.40, +1.02])
             with c2:  
@@ -180,7 +179,7 @@ with a0:
                     st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
             
 with a1:               
-    with st.container(border=True, key='conta_03', height = 500):
+    with st.container(border=True, key='conta_03', height = 440):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Logistic Regression")
@@ -190,7 +189,7 @@ with a1:
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
                     resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = nb_noisy_features, seed = random_seed)
-                    ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 450)
+                    ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
             with c2:  
