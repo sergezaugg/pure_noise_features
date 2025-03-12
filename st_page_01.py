@@ -68,7 +68,7 @@ with a0b:
 
     with st.container(border=True, key='conta_b01'):
         with st.form(key = "f01", border=False):
-            a0, a1, a2 = st.columns(3)  # st.columns([0.60, 0.40, 0.40])
+            a0, a1, a2, _ = st.columns(4)  
             with a0:
                 preset_options = ["Linearly separable I", 
                                     "Linearly separable II", 
@@ -84,17 +84,17 @@ with a0b:
             with a1:
                 st.text("")
                 st.text("")
-                submitted = st.form_submit_button("Confirm", type="primary")
+                submitted = st.form_submit_button("Confirm", type="primary", use_container_width = True)
             if submitted: 
                 ss['distr'] = {'cus' : scenarios_di[option1]}
 
     with st.form("f02", border=False, clear_on_submit=False, enter_to_submit=False):
         with st.container(border=True, key='conta_01', height = 300):
-            cc1, cc2 = st.columns(2)  
+            cc1, cc2, _, _ = st.columns(4)  # >>>>>>>>>>>
             with cc1:
                 st.text("Finetune distribution class A")
             with cc2:
-                submitted_1 = st.form_submit_button("Submit values", type="primary")
+                submitted_1 = st.form_submit_button("Submit values", type="primary", use_container_width = True)
             c1, c2, c3, c4, c5, c6, = st.columns(6)  
             with c1:
                 n1 = st.number_input(label = "N",  min_value=10, max_value=10000,               value=ss['distr']['cus']['n1'], step=100, key = "k001")
