@@ -13,7 +13,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 import streamlit as st
 
-
 plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
@@ -211,6 +210,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
     _ = fig.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig.update_layout(paper_bgcolor="#222222")
+    _ = fig.update(layout_showlegend = False)
     # return fig object
     return(fig)
 
