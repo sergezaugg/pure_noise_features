@@ -9,8 +9,8 @@ import streamlit as st
 st.set_page_config(layout="wide")
 
 pages = [
-    st.Page("st_page_00.py", title="Summary"),
     st.Page("st_page_01.py", title="Interactive"),
+    st.Page("st_page_00.py", title="Summary"),
     ]
 
 pg = st.navigation(pages)
@@ -18,7 +18,7 @@ pg = st.navigation(pages)
 pg.run()
 
 with st.sidebar:
-    st.text("-- Under development --")
+    st.text("v1.1.x - improvements underway")
     st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title(""); st.title("")
     st.title(""); st.title(""); st.title(""); st.title("") 
     st.markdown(''':gray[RELATED TOPICS]''')

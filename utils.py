@@ -92,7 +92,7 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
         _ = fig1.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
         _ = fig1.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
         _ = fig1.update_traces(marker={'size': 2})
-        _ = fig1.update_layout(paper_bgcolor="#222222")
+        _ = fig1.update_layout(paper_bgcolor="#111122")
         _ = fig1.update_layout(margin=dict(r=150, t=40 ))
         _ = fig1.update_layout(legend=dict(yanchor="top", y=0.9, xanchor="left", x=1.1)) 
         df_figs.append(fig1)
@@ -209,7 +209,7 @@ def plot_performance_vs_n_features(li,  width = 500, height = 750):
     _ = fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=-0.50, xanchor="left", x=0, font=dict(size=15)))
     _ = fig.update_xaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
     _ = fig.update_yaxes(showline = True, linecolor = 'white', linewidth = 2, row = 1, col = 1, mirror = True)
-    _ = fig.update_layout(paper_bgcolor="#222222")
+    _ = fig.update_layout(paper_bgcolor="#111122")
     _ = fig.update(layout_showlegend = False)
     # return fig object
     return(fig)
