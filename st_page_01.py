@@ -6,20 +6,15 @@
 import streamlit as st
 import plotly.express as px
 from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features, str_to_int_spec
-from utils import scenarios_di
+from utils import scenarios_di, optform, list_to_str
 from streamlit import session_state as ss
 
 random_seed = 557
 
-# initial session state
-if 'fig01' not in ss:
-    ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
-if 'fig02' not in ss:
-    ss.fig02 = "not_available" 
-if 'fig03' not in ss:
-    ss.fig03 = "not_available" 
-if 'distr' not in ss:
-    ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
+
+# st.write(list_to_str(ss['par']['nn_feat']))
+
+
 
 
 # ---------------------          
@@ -31,13 +26,13 @@ with a0b:
             a0, a1, a2, _ = st.columns(4)  
             with a0:
                 preset_options = list(scenarios_di.keys()) 
-                option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
+                ss['par']['sce_index'] = st.selectbox("Predefined distributions", preset_options, index = ss['par']['sce_index'], format_func = optform, key = 'sel02')
             with a1:
                 st.text("")
                 st.text("")
                 submitted = st.form_submit_button("Confirm", type="primary", use_container_width = True)
             if submitted: 
-                ss['distr'] = {'cus' : scenarios_di[option1]}
+                ss['distr'] = {'cus' : scenarios_di[ss['par']['sce_index']]}
 
     with st.form("f02", border=False, clear_on_submit=False, enter_to_submit=False):
         with st.container(border=True, key='conta_01', height = 300):
@@ -84,19 +79,25 @@ with a0b:
 
 # ---------------------          
     with st.container(border=True, key='conta_01a', height = 100):
-        c0, c1, c2 = st.columns(3)
-        with c0:
-            sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 3, 10, 30, 100, 300, 1000")
-            nb_noisy_features = sttr.split(",")
-            nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
-            nb_noisy_features.append(0) # force ZERO to be in
-            nb_noisy_features = list(set(nb_noisy_features)) # remove duplicates
-            nb_noisy_features.sort()
-        with c1:
-            st.text("Selected values")  
-            st.text(nb_noisy_features)  
-        with c2:
-            st.text("")  
+        with st.form(key = "f03", border=False):
+            c0, c1, c2 = st.columns(3)
+            with c0:
+                sttr = st.text_input("Nb noisy features (comma separated)", list_to_str(ss['par']['nn_feat']) ) # "0, 1, 3, 10, 30, 100, 300, 1000")
+            with c1:    
+                st.text("")  
+                st.text("")  
+                submitted_3 = st.form_submit_button("Submit values", type="primary", use_container_width = True)
+                if submitted_3:
+                    nb_noisy_features = sttr.split(",")
+                    nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
+                    nb_noisy_features.append(0) # force ZERO to be in
+                    nb_noisy_features = list(set(nb_noisy_features)) # remove duplicates
+                    nb_noisy_features.sort()
+                    ss['par']['nn_feat'] = nb_noisy_features
+            with c2:
+                st.text("Selected values")  
+                st.text(ss['par']['nn_feat'])  
+                # st.text("")  
 
 
 
@@ -119,7 +120,7 @@ with a0:
             with st.form("B", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
-                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
+                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'],  ntrees = nb_trees, seed = random_seed)
                     ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 400)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.40, +1.02])
@@ -139,7 +140,7 @@ with a1:
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
-                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = nb_noisy_features, seed = random_seed)
+                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'], seed = random_seed)
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
