@@ -16,7 +16,6 @@ import streamlit as st
 plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
-
 # Define pre-specified scenarios 
 N = 3000
 scenarios_di = { 

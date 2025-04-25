@@ -68,7 +68,7 @@ with a0b:
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
                     'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
                     }
-                # st.rerun() 
+                st.rerun() 
     
 
 # ---------------------          
@@ -91,8 +91,6 @@ with a0b:
             with c2:
                 st.text("Selected values")  
                 st.text(ss['par']['nn_feat'])  
-                # st.text("")  
-
 
 
 # ---------------------                         
@@ -104,7 +102,7 @@ with a1b:
   
 a0, a1, = st.columns([0.50, 0.50])
 with a0:
-    with st.container(border=True, key='conta_02b', height = 440):
+    with st.container(border=True, key='conta_02b', height = 500):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Random Forest")
@@ -122,23 +120,26 @@ with a0:
                     # keep current param values in ss
                     ss['par']['rfo_nb_trees'] = n_trees
                     ss['par']['rfo_max_feat'] = rfo_max_features 
-                    # st.rerun()
-
+                    st.rerun()
             with c2:  
                 if ss["fig02"] == "not_available":
                     print("plot not available")
                 else:    
                     st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
+
+        st.page_link("https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html", label=":gray[Scikit - Random Forest]")
+
             
 with a1:               
-    with st.container(border=True, key='conta_03', height = 440):
+    with st.container(border=True, key='conta_03', height = 500):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Logistic Regression")
-            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.0, value=ss['par']['logit_c_param'])
+            logit_c_param = st.select_slider(label = "C parameter", options=[0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0], value=ss['par']['logit_c_param'])
             # compute the simulation 
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
+                st.text("Inverse of regularization strength: smaller values specify stronger regularization.")
                 if submitted:   
                     resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'], seed = random_seed)
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
@@ -146,15 +147,16 @@ with a1:
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
                     # keep current param values in ss
                     ss['par']['logit_c_param'] = logit_c_param
-                    # st.rerun()
-
+                    st.rerun()
             with c2:  
                 if ss["fig03"] == "not_available":
                     print("plot not available")
                 else:                
                     st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
+        
+        st.page_link("https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html", label=":gray[Scikit - Logistic Regression]")
 
-
+        
 
 
 
