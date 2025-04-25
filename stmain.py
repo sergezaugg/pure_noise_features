@@ -21,7 +21,10 @@ if 'distr' not in ss:
 if 'par' not in ss: 
     ss['par'] = {
         'sce_index' : 0,
-        'nn_feat' : [0, 1, 3, 10, 30, 100, 300, 1000]
+        'nn_feat' : [0, 1, 3, 10, 30, 100, 300, 1000],
+        'rfo_nb_trees' : 30,
+        'rfo_max_feat' : 1 ,
+        'logit_c_param' : 1.0,
         }
 
 st.set_page_config(layout="wide")

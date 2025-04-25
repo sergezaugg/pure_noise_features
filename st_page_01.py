@@ -11,12 +11,6 @@ from streamlit import session_state as ss
 
 random_seed = 557
 
-
-# st.write(list_to_str(ss['par']['nn_feat']))
-
-
-
-
 # ---------------------          
 a0b, a1b, = st.columns([0.60, 0.40])
 with a0b:
@@ -114,16 +108,22 @@ with a0:
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Random Forest")
-            nb_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=30, step=1,)
-            rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=1, step=1)
+            n_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=ss['par']['rfo_nb_trees'], step=1,)
+            rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=ss['par']['rfo_max_feat'], step=1)
             # compute the simulation 
             with st.form("B", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
-                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'],  ntrees = nb_trees, seed = random_seed)
+                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'],  
+                                                    ntrees = n_trees, seed = random_seed)
                     ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 400)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.40, +1.02])
+                    # keep current param values in ss
+                    ss['par']['rfo_nb_trees'] = n_trees
+                    ss['par']['rfo_max_feat'] = rfo_max_features 
+                    st.rerun()
+
             with c2:  
                 if ss["fig02"] == "not_available":
                     print("plot not available")
@@ -135,7 +135,7 @@ with a1:
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Logistic Regression")
-            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.0, value=1.0)
+            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.0, value=ss['par']['logit_c_param'])
             # compute the simulation 
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
@@ -144,6 +144,10 @@ with a1:
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
+                    # keep current param values in ss
+                    ss['par']['logit_c_param'] = logit_c_param
+                    st.rerun()
+
             with c2:  
                 if ss["fig03"] == "not_available":
                     print("plot not available")
