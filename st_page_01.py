@@ -6,50 +6,10 @@
 import streamlit as st
 import plotly.express as px
 from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features, str_to_int_spec
+from utils import scenarios_di
 from streamlit import session_state as ss
 
 random_seed = 557
-
-# Define pre-specified scenarios 
-N = 3000
-scenarios_di = { 
-    "Linearly separable I" : {
-        'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-        },
-    "Saurona" : {           
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
-        },
-    "Parallel" : {
-        'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
-        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,
-        },
-    "Cross" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : -0.96,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : +0.96,
-        },
-    "Linearly separable II" : {
-        'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-        },
-    "Weak informative" : {
-        'n1' : N, 'mu1' : [0.5, 0.0] , 'std1' : [1.0,1.0], 'corr1' : -0.90,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : -0.90,
-        }, 
-   "Redundant" : {
-        'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
-        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,
-        }, 
-   "Not separable" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,
-        }, 
-   "Looking up" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
-        }
-    }
 
 # initial session state
 if 'fig01' not in ss:
@@ -70,16 +30,7 @@ with a0b:
         with st.form(key = "f01", border=False):
             a0, a1, a2, _ = st.columns(4)  
             with a0:
-                preset_options = ["Linearly separable I", 
-                                    "Linearly separable II", 
-                                    "Weak informative",
-                                    "Redundant",
-                                    "Parallel", 
-                                    "Cross", 
-                                    "Saurona", 
-                                    "Looking up",
-                                    "Not separable",
-                                    ]
+                preset_options = list(scenarios_di.keys()) 
                 option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
             with a1:
                 st.text("")
