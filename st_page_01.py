@@ -6,61 +6,10 @@
 import streamlit as st
 import plotly.express as px
 from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features, str_to_int_spec
+from utils import scenarios_di, optform, list_to_str
 from streamlit import session_state as ss
 
 random_seed = 557
-
-# Define pre-specified scenarios 
-N = 3000
-scenarios_di = { 
-    "Linearly separable I" : {
-        'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-        },
-    "Saurona" : {           
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,
-        },
-    "Parallel" : {
-        'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
-        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,
-        },
-    "Cross" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : -0.96,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : +0.96,
-        },
-    "Linearly separable II" : {
-        'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-        },
-    "Weak informative" : {
-        'n1' : N, 'mu1' : [0.5, 0.0] , 'std1' : [1.0,1.0], 'corr1' : -0.90,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : -0.90,
-        }, 
-   "Redundant" : {
-        'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
-        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,
-        }, 
-   "Not separable" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,
-        }, 
-   "Looking up" : {
-        'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,
-        }
-    }
-
-# initial session state
-if 'fig01' not in ss:
-    ss.fig01 = px.scatter(x = [0], y = [0], width = 10, height = 10)
-if 'fig02' not in ss:
-    ss.fig02 = "not_available" 
-if 'fig03' not in ss:
-    ss.fig03 = "not_available" 
-if 'distr' not in ss:
-    ss['distr'] = {'cus' : scenarios_di['Linearly separable I']}  
-
 
 # ---------------------          
 a0b, a1b, = st.columns([0.60, 0.40])
@@ -70,23 +19,14 @@ with a0b:
         with st.form(key = "f01", border=False):
             a0, a1, a2, _ = st.columns(4)  
             with a0:
-                preset_options = ["Linearly separable I", 
-                                    "Linearly separable II", 
-                                    "Weak informative",
-                                    "Redundant",
-                                    "Parallel", 
-                                    "Cross", 
-                                    "Saurona", 
-                                    "Looking up",
-                                    "Not separable",
-                                    ]
-                option1 = st.selectbox("Predefined distributions", preset_options, key = 'sel02')
+                preset_options = list(scenarios_di.keys()) 
+                ss['par']['sce_index'] = st.selectbox("Predefined distributions", preset_options, index = ss['par']['sce_index'], format_func = optform, key = 'sel02')
             with a1:
                 st.text("")
                 st.text("")
                 submitted = st.form_submit_button("Confirm", type="primary", use_container_width = True)
             if submitted: 
-                ss['distr'] = {'cus' : scenarios_di[option1]}
+                ss['distr'] = {'cus' : scenarios_di[ss['par']['sce_index']]}
 
     with st.form("f02", border=False, clear_on_submit=False, enter_to_submit=False):
         with st.container(border=True, key='conta_01', height = 300):
@@ -128,25 +68,29 @@ with a0b:
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
                     'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
                     }
-                st.rerun() # this solves the jump-back-button-glitch-wtf
+                st.rerun() 
     
 
 # ---------------------          
     with st.container(border=True, key='conta_01a', height = 100):
-        c0, c1, c2 = st.columns(3)
-        with c0:
-            sttr = st.text_input("Nb noisy features (comma separated)", "0, 1, 3, 10, 30, 100, 300, 1000")
-            nb_noisy_features = sttr.split(",")
-            nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
-            nb_noisy_features.append(0) # force ZERO to be in
-            nb_noisy_features = list(set(nb_noisy_features)) # remove duplicates
-            nb_noisy_features.sort()
-        with c1:
-            st.text("Selected values")  
-            st.text(nb_noisy_features)  
-        with c2:
-            st.text("")  
-
+        with st.form(key = "f03", border=False):
+            c0, c1, c2 = st.columns(3)
+            with c0:
+                sttr = st.text_input("Nb noisy features (comma separated)", list_to_str(ss['par']['nn_feat']) ) # "0, 1, 3, 10, 30, 100, 300, 1000")
+            with c1:    
+                st.text("")  
+                st.text("")  
+                submitted_3 = st.form_submit_button("Submit values", type="primary", use_container_width = True)
+                if submitted_3:
+                    nb_noisy_features = sttr.split(",")
+                    nb_noisy_features = [str_to_int_spec(a) for a in nb_noisy_features] # convert to int if possible , else to ZERO
+                    nb_noisy_features.append(0) # force ZERO to be in
+                    nb_noisy_features = list(set(nb_noisy_features)) # remove duplicates
+                    nb_noisy_features.sort()
+                    ss['par']['nn_feat'] = nb_noisy_features
+            with c2:
+                st.text("Selected values")  
+                st.text(ss['par']['nn_feat'])  
 
 
 # ---------------------                         
@@ -158,47 +102,61 @@ with a1b:
   
 a0, a1, = st.columns([0.50, 0.50])
 with a0:
-    with st.container(border=True, key='conta_02b', height = 440):
+    with st.container(border=True, key='conta_02b', height = 500):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Random Forest")
-            nb_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=30, step=1,)
-            rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=1, step=1)
+            n_trees = st.number_input(label = "RF nb trees",  min_value=1, max_value=500, value=ss['par']['rfo_nb_trees'], step=1,)
+            rfo_max_features = st.number_input(label = "RF max features",  min_value=1, max_value=100, value=ss['par']['rfo_max_feat'], step=1)
             # compute the simulation 
             with st.form("B", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
                 if submitted:   
-                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
+                    resu02 = evaluate_scenarios_rfo(rfo_max_features = rfo_max_features, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'],  
+                                                    ntrees = n_trees, seed = random_seed)
                     ss["fig02"] = plot_performance_vs_n_features(resu02, width = 680, height = 400)
                     ss["fig02"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig02"].update_layout(yaxis_range=[0.40, +1.02])
+                    # keep current param values in ss
+                    ss['par']['rfo_nb_trees'] = n_trees
+                    ss['par']['rfo_max_feat'] = rfo_max_features 
+                    st.rerun()
             with c2:  
                 if ss["fig02"] == "not_available":
                     print("plot not available")
                 else:    
                     st.plotly_chart(ss["fig02"], use_container_width=False, key='k_fig02')
+
+        st.page_link("https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html", label=":gray[Scikit - Random Forest]")
+
             
 with a1:               
-    with st.container(border=True, key='conta_03', height = 440):
+    with st.container(border=True, key='conta_03', height = 500):
         c1, c2,  = st.columns([0.20, 0.40], vertical_alignment="top")
         with c1:  
             st.subheader("Logistic Regression")
-            logit_c_param = st.number_input(label = "Logreg C (regularisation)",  min_value=0.0001, max_value=10000.0, value=1.0)
+            logit_c_param = st.select_slider(label = "C parameter", options=[0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0], value=ss['par']['logit_c_param'])
             # compute the simulation 
             with st.form("C", border=False):
                 submitted = st.form_submit_button("Start simulation", type="primary")
+                st.text("Inverse of regularization strength: smaller values specify stronger regularization.")
                 if submitted:   
-                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = nb_noisy_features, seed = random_seed)
+                    resu03 = evaluate_scenarios_logit(logit_c_param = logit_c_param, sce = ss['distr'], nb_noisy_features = ss['par']['nn_feat'], seed = random_seed)
                     ss["fig03"] = plot_performance_vs_n_features(resu03, width = 600, height = 400)
                     ss["fig03"].update_layout(margin=dict(l=20, r=20, t=100, b=20),)
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
+                    # keep current param values in ss
+                    ss['par']['logit_c_param'] = logit_c_param
+                    st.rerun()
             with c2:  
                 if ss["fig03"] == "not_available":
                     print("plot not available")
                 else:                
                     st.plotly_chart(ss["fig03"], use_container_width=False, key='k_fig03')    
+        
+        st.page_link("https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html", label=":gray[Scikit - Logistic Regression]")
 
-
+        
 
 
 
