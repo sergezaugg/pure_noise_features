@@ -68,7 +68,7 @@ with a0b:
                     'n1' : n1, 'mu1' : [mu1x, mu1y] , 'std1' : [std1x, std1y], 'corr1' : corr1,
                     'n2' : n2, 'mu2' : [mu2x, mu2y] , 'std2' : [std2x, std2y], 'corr2' : corr2,
                     }
-                st.rerun() # this solves the jump-back-button-glitch-wtf
+                # st.rerun() 
     
 
 # ---------------------          
@@ -122,7 +122,7 @@ with a0:
                     # keep current param values in ss
                     ss['par']['rfo_nb_trees'] = n_trees
                     ss['par']['rfo_max_feat'] = rfo_max_features 
-                    st.rerun()
+                    # st.rerun()
 
             with c2:  
                 if ss["fig02"] == "not_available":
@@ -146,7 +146,7 @@ with a1:
                     ss["fig03"].update_layout(yaxis_range=[0.40, +1.02])
                     # keep current param values in ss
                     ss['par']['logit_c_param'] = logit_c_param
-                    st.rerun()
+                    # st.rerun()
 
             with c2:  
                 if ss["fig03"] == "not_available":
