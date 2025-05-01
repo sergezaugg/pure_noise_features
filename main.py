@@ -10,12 +10,8 @@ import os
 random_seed = 557
 path_save_figures = "./saved_figures_temp"
 N = 3000
-# Evaluate the scenarios (QUICK)
-nb_noisy_features = [0, 1, 5, 50, 100]
-nb_trees = 5
-# Evaluate the scenarios (FULL)
-# nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
-# nb_trees = 30
+nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500]
+nb_trees = 30
 
 # Define scenarios 
 scenarios_di = { 

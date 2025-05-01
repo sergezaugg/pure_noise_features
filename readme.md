@@ -67,7 +67,7 @@ fig00.show()
 *  Only the two first features are show
 *  All other features are sampled from exactly the same random normal for both classes
 
-![](./pics_dashboard\results_02.png)
+![](./pics/results_02.png)
 
 
 
