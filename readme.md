@@ -14,8 +14,8 @@ Plots illustrate how pure-noise-features impacts the predictive performance.
 The scenarios assessed here are artificial and by no way representative of situations encountered in the real world.
 Yet, they are great way to didactically illustrate the subtle interactions between data and models.
 
-**IN-DEPTH ILLUSTRATION:**
-See [interactive dashboard](https://purenoisefeatures.streamlit.app/) 
+**INTERACTVE ILLUSTRATION:**
+See also companion project [interactive dashboard](https://purenoisefeatures.streamlit.app/) 
 
 ### Dependencies / Intallation
 * Developed under Python 3.12.8

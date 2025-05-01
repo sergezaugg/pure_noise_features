@@ -11,33 +11,32 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
-import streamlit as st
 
 plotcol_seq01 = ['#0077ff', '#ffaa00', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 plotcol_seq02 = ['#ffbb00', '#0077ff', '#33ff00', '#00ffff', '#ff00ff', '#ffff66', '#ff0000']
 
-# Define pre-specified scenarios 
-N = 3000
-scenarios_di = { 
-    0 : {'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,},
-    1 : {'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
-        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,},
-    2 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : -0.96,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : +0.96,},
-    3 : {'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,},
-    4 : {'n1' : N, 'mu1' : [0.5, 0.0] , 'std1' : [1.0,1.0], 'corr1' : -0.90,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : -0.90,}, 
-    5 : {'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
-        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,}, 
-    6 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,}, 
-    7 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,},
-    8 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,},
-    }
+# # Define pre-specified scenarios 
+# N = 3000
+# scenarios_di = { 
+#     0 : {'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
+#         'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,},
+#     1 : {'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
+#         'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,},
+#     2 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0, 1.0], 'corr1' : -0.96,
+#         'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0, 1.0], 'corr2' : +0.96,},
+#     3 : {'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1.0,1.0], 'corr1' : 0.00,
+#         'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,},
+#     4 : {'n1' : N, 'mu1' : [0.5, 0.0] , 'std1' : [1.0,1.0], 'corr1' : -0.90,
+#         'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : -0.90,}, 
+#     5 : {'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1.0,1.0], 'corr1' : +0.98,
+#         'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1.0,1.0], 'corr2' : +0.98,}, 
+#     6 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
+#         'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1.1,1.1], 'corr2' : 0.00,}, 
+#     7 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.0,1.0], 'corr1' : 0.0,
+#         'n2' : N, 'mu2' : [0.0, 1.0] , 'std2' : [0.15,0.1], 'corr2' : 0.0,},
+#     8 : {'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1.2,1.2], 'corr1' : 0.0,
+#         'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [0.05,0.7], 'corr2' : 0.0,},
+#     }
 
 
 def optform(x):
@@ -73,7 +72,6 @@ def bivariate_normal(n = 1000, mu =[0,0] , std = [3,2], corr = 0.5):
     return(x1)
 
 
-@st.cache_data
 def make_dataset(params, n_noisy_features): 
     """  
     """
@@ -101,7 +99,6 @@ def make_dataset(params, n_noisy_features):
     return(df)
 
 
-# @st.cache_data
 def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     """
     """
@@ -134,7 +131,6 @@ def plot_scenarios(scenarios_di, seed, width = 450, height = 450,):
     return(df_figs)    
 
 
-@st.cache_data
 def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, seed):
     """
     """
@@ -171,7 +167,6 @@ def evaluate_scenarios_rfo(sce, nb_noisy_features, ntrees, rfo_max_features, see
     return([df_final, params])
 
 
-@st.cache_data
 def evaluate_scenarios_logit(sce, nb_noisy_features, logit_c_param, seed):
     """
     """
@@ -207,7 +202,6 @@ def evaluate_scenarios_logit(sce, nb_noisy_features, logit_c_param, seed):
     return([df_final, params])
 
 
-@st.cache_data
 def plot_performance_vs_n_features(li,  width = 500, height = 750):
     """
     """
