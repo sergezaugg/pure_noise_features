@@ -1,21 +1,21 @@
 # Impact of pure-noise-features on predictive performance in supervised classification
 
 ### Summary
-This is a didactic mini-project.
-In supervised classification applications, many features are typically available but we suspect that not all needed.
+This is a mini-project to implement an ML analysis for reproducible execution.
+In supervised classification, many features are typically available but we suspect that not all needed.
 It is legitimate to ask which amount of un-informative feature is acceptable.
 This small code base allows to simulate many scenario with variable number un-informative feature and see how they affect predictive performance.
 **IN A NUTSHELL:**
 A binary class variable and two informative features are created.
 Many more pure-noise-features can be added the the feature space.
-Random Forest Classifiers are trained on this data and their predictive performance (AUC) is computed.
+Random Forest and Logistic Regression Classifiers are trained on this data and their predictive performance (AUC) is computed.
 Plots illustrate how pure-noise-features impacts the predictive performance.
 **WORD OF CAUTION:**
 The scenarios assessed here are artificial and by no way representative of situations encountered in the real world.
 Yet, they are great way to didactically illustrate the subtle interactions between data and models.
 
-**IN-DEPTH ILLUSTRATION:**
-See [interactive dashboard](https://purenoisefeatures.streamlit.app/) 
+**INTERACTVE ILLUSTRATION:**
+See also companion project [project](https://purenoisefeatures.streamlit.app/) which has an interactive frontend.
 
 ### Dependencies / Intallation
 * Developed under Python 3.12.8
@@ -60,6 +60,12 @@ fig00 = plot_performance_vs_n_features(resu00)
 fig00.show()
 
 ```
+
+## Illustration of possible scenarios
+*  Only the two first features are show
+*  All other features are sampled from exactly the same random normal for both classes
+
+![](./pics/results_02.png)
 
 
 
