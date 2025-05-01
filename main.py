@@ -6,63 +6,51 @@
 from utils import plot_scenarios, evaluate_scenarios_rfo, evaluate_scenarios_logit, plot_performance_vs_n_features
 import os
 
+# Define parameters 
 random_seed = 557
 path_save_figures = "./saved_figures_temp"
 N = 3000
+# Evaluate the scenarios (QUICK)
+nb_noisy_features = [0, 1, 5, 50, 100]
+nb_trees = 5
+# Evaluate the scenarios (FULL)
+# nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
+# nb_trees = 30
 
-if not os.path.exists(path_save_figures):
-    os.makedirs(path_save_figures)
-
-# Define several scenarios 
+# Define scenarios 
 scenarios_di = { 
     "f01, f02 informative" : {
         'n1' : N, 'mu1' : [0.0, 2.0] , 'std1' : [1.1,1.1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,
-        }
-    ,
+        'n2' : N, 'mu2' : [2.0, 0.0] , 'std2' : [1.0,1.0], 'corr2' : 0.00,},
     "f01, f02 informative and redundant" : {
         'n1' : N, 'mu1' : [ 1.4,  1.4] , 'std1' : [1,1], 'corr1' : +0.98,
-        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1,1], 'corr2' : +0.98,
-        }
-    ,
+        'n2' : N, 'mu2' : [-1.4, -1.4] , 'std2' : [1,1], 'corr2' : +0.98,},
     "f01, f02 jointly informative (parallel)" : {
         'n1' : N, 'mu1' : [-0.14, -0.14] , 'std1' : [1.2,1.2], 'corr1' : -0.98,
-        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,
-        }
-    ,
+        'n2' : N, 'mu2' : [+0.14, +0.14] , 'std2' : [1.2,1.2], 'corr2' : -0.98,},
    "f01, f02 jointly informative (cross)" : {
         'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1,1], 'corr1' : -0.96,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : +0.96,
-        }
-    ,
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : +0.96,},
     "Only f01 is informative " : {
         'n1' : N, 'mu1' : [ 1.0, 1.0] , 'std1' : [1,1], 'corr1' : 0.00,
-        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1,1], 'corr2' : 0.00,
-        }
-    ,
+        'n2' : N, 'mu2' : [-1.0, 1.0] , 'std2' : [1,1], 'corr2' : 0.00,},
     "Features are NOT informative" : {
         'n1' : N, 'mu1' : [0.0, 0.0] , 'std1' : [1,1], 'corr1' : -0.90,
-        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : -0.90,
-        }
-    , 
+        'n2' : N, 'mu2' : [0.0, 0.0] , 'std2' : [1,1], 'corr2' : -0.90,}, 
     }
+
+# prepare a temp dir to store results 
+if not os.path.exists(path_save_figures):
+    os.makedirs(path_save_figures)
 
 # Prepare scenario figures  
 figs_li = plot_scenarios(scenarios_di, random_seed,  width = 555, height = 460,)
 
-# # Evaluate the scenarios (QUICK)
-nb_noisy_features = [0, 1, 5, 10, 50, 100]
-nb_trees = 5
-
-# # Evaluate the scenarios (FULL)
-# nb_noisy_features = [0, 1, 5, 10, 25, 50, 100, 500, 1000]
-# nb_trees = 50
-
-resu01 = evaluate_scenarios_rfo(rfo_max_features =  1, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-resu02 = evaluate_scenarios_rfo(rfo_max_features = 10, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-resu03 = evaluate_scenarios_rfo(rfo_max_features = 25, sce = scenarios_di, nb_noisy_features = nb_noisy_features,  ntrees = nb_trees, seed = random_seed)
-resu04 = evaluate_scenarios_logit(logit_c_param =   0.01, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
-resu05 = evaluate_scenarios_logit(logit_c_param =   1.00, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
+resu01 = evaluate_scenarios_rfo(rfo_max_features =  1,    sce = scenarios_di, nb_noisy_features = nb_noisy_features, ntrees = nb_trees, seed = random_seed)
+resu02 = evaluate_scenarios_rfo(rfo_max_features = 10,    sce = scenarios_di, nb_noisy_features = nb_noisy_features, ntrees = nb_trees, seed = random_seed)
+resu03 = evaluate_scenarios_rfo(rfo_max_features = 25,    sce = scenarios_di, nb_noisy_features = nb_noisy_features, ntrees = nb_trees, seed = random_seed)
+resu04 = evaluate_scenarios_logit(logit_c_param = 0.01,   sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
+resu05 = evaluate_scenarios_logit(logit_c_param = 1.00,   sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
 resu06 = evaluate_scenarios_logit(logit_c_param = 100.00, sce = scenarios_di, nb_noisy_features = nb_noisy_features, seed = random_seed)
 
 # Prepare results figures 
